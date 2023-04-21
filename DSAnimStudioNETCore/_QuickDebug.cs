@@ -23,10 +23,28 @@ namespace DSAnimStudio
 {
     public static class _QuickDebug
     {
-
         public static void BuildDebugMenu()
         {
             // Dark Souls: Nightfall tests removed for public version lel
+            if (DebugTestButton("EXPORT CURRENT ANIMATION\n\n[ASSIMP TEST]"))
+            {
+                var a = Scene.MainModel?.AnimContainer?.CurrentAnimation?.data;
+                if (a != null)
+                {
+                    string errorStr = SoulsAssetPipeline.AnimationExporting.AnimationExporter.ExportToFile(a,
+                        @"E:\Reverse\Assets\SAP_ANIM_EXPORT_TEST.fbx", "fbx");
+                    {
+                        ImguiOSD.DialogManager.DialogOK(errorStr == string.Empty ? "Export Finished" : "Export Failed",
+                            errorStr);
+                    }
+                }
+                else
+                {
+                    ImguiOSD.DialogManager.DialogOK("CURRENT ANIMATION IS NULL", "CURRENT ANIMATION IS NULL");
+                }
+
+                Console.WriteLine("DFSDF");
+            }
         }
 
         private enum DebugValType
@@ -84,7 +102,8 @@ namespace DSAnimStudio
             return curVal;
         }
 
-        private static string UpdateString(string key, string dispName, string defaultValue = "", uint maxStrLength = 128)
+        private static string UpdateString(string key, string dispName, string defaultValue = "",
+            uint maxStrLength = 128)
         {
             var dict = debugValFields_String;
 
