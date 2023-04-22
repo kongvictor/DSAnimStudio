@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DSAnimStudio.Extenstions;
 using NMatrix = System.Numerics.Matrix4x4;
 using NVector2 = System.Numerics.Vector2;
 using NVector3 = System.Numerics.Vector3;
@@ -28,15 +29,12 @@ namespace DSAnimStudio
             // Dark Souls: Nightfall tests removed for public version lel
             if (DebugTestButton("EXPORT CURRENT ANIMATION\n\n[ASSIMP TEST]"))
             {
-                var a = Scene.MainModel?.AnimContainer?.CurrentAnimation?.data;
+                // var a = Scene.MainModel?.AnimContainer?.CurrentAnimation?.data;
+                var a = Scene.MainModel;
                 if (a != null)
                 {
-                    string errorStr = SoulsAssetPipeline.AnimationExporting.AnimationExporter.ExportToFile(a,
-                        @"E:\Reverse\Assets\SAP_ANIM_EXPORT_TEST.fbx", "fbx");
-                    {
-                        ImguiOSD.DialogManager.DialogOK(errorStr == string.Empty ? "Export Finished" : "Export Failed",
-                            errorStr);
-                    }
+                    FBXExporter.ExportToFile(a,
+                        @"E:\DSReverse\SAP_ANIM_EXPORT_TEST.fbx", "fbx");
                 }
                 else
                 {
